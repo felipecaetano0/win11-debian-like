@@ -16,9 +16,9 @@ foreach ($s in $services) {
     try {
         Set-Service -Name $s -StartupType Automatic -ErrorAction SilentlyContinue
         Restart-Service -Name $s -Force -ErrorAction SilentlyContinue
-        Write-Host "-> Servico $s: Configurado como Automatico e reiniciado." -ForegroundColor Green
+        Write-Host "-> Servico $($s) - Configurado como Automatico e reiniciado." -ForegroundColor Green
     } catch {
-        Write-Host "-> Falha ao ajustar servico $s: $($_.Exception.Message)" -ForegroundColor DarkGray
+        Write-Host "-> Falha ao ajustar servico $($s) - $($_.Exception.Message)" -ForegroundColor DarkGray
     }
 }
 
@@ -39,7 +39,7 @@ try {
     Write-Host "-> Erro ao ajustar parametros de energia: $($_.Exception.Message)" -ForegroundColor DarkGray
 }
 
-# 3. Limpeza do Cache de Chaves de Link corrompidas
+# 3. Limpeza do Cache de Chaves de Link corrompidas e reset do driver de hardware
 Write-Host "`n[3/4] Resetando subsistema de radio Bluetooth..." -ForegroundColor Yellow
 try {
     $radioDev = Get-PnpDevice -Class Bluetooth | Where-Object { $_.FriendlyName -match "Realtek Bluetooth Adapter" }
